@@ -1228,7 +1228,7 @@ var previewbox = (function () {
 				var i,
 					as = container.querySelectorAll("a");
 				for (i = 0; i < as.length; i++) {
-					if(as[i].href.includes("aspirantrpg.com") ) {
+					if(as[i].href.includes("aspirantrpg.com") || as[i].href.includes("bombasticgames.com") ) {
 						_mkPreviewAnchor(as[i]);
 					}
 				}
