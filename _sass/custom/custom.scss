@@ -4,6 +4,17 @@
 	margin-right: .2em;
 	margin-top: 0px;
 	float: right;
+	a {
+		color: $white;
+		text-decoration: none;
+	}
+}
+
+.label-yellow {
+	a {
+		color: $grey-dk-200;
+		text-decoration: none;
+	}
 }
 
 .block {
