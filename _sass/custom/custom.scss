@@ -4,17 +4,16 @@
 	margin-right: .2em;
 	margin-top: 0px;
 	float: right;
-	&a {
-		color: white !important;
-		text-decoration: none !important;
-	}
 }
 
-.label-yellow {
-	&a {
-		color: #44434d !important;
-		text-decoration: none !important;
-	}
+.label a {
+	color: $white;
+	text-decoration: none;
+}
+
+.label.label-yellow a {
+	color: $grey-dk-200;
+	text-decoration: none;
 }
 
 .block {
