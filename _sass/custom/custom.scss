@@ -1,14 +1,22 @@
 .label {
 	margin-bottom: 0px;
 	margin-left: 0px;
-	margin-right: 0px;
+	margin-right: .2em;
 	margin-top: 0px;
 	float: right;
 }
 
 .block {
-	padding: .5em;
+	padding: 1em;
   	border: 1px solid gray;
 	margin-bottom: .5em;
 	border-radius: .5em;
+}
+
+h4, h5 {
+	font-weight: 700;
+}
+
+th {
+	min-width: 0px;
 }
