@@ -22,8 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // need to replace sort placeholder with the available options
     for (const key of blockMap) {
+        const nameString = key[0] + " (" + key.length + ")"
         const checkBox = document.createElement("input")
-        checkBox.type("checkbox")
+        checkBox.type = "checkbox"
+        checkBox.name = nameString
         checkBox.onchange((event) => {
             // if checked enable all the entries
             if(event.currentTarget.checked) {
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
         const name = document.createElement("label")
-        name.textContent(key[0] + " (" + key.length + ")")
+        name.textContent(nameString)
         filterNode.appendChild(checkBox)
         filterNode.appendChild(name)
     }
