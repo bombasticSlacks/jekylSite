@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
         const name = document.createElement("label")
-        name.textContent(nameString)
+        name.textContent = nameString
         filterNode.appendChild(checkBox)
         filterNode.appendChild(name)
     }
