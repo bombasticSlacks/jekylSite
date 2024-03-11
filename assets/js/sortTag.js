@@ -82,7 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
               for (block of blockMap.get(key[0])) {
                 let show = true;
                 for (constraint of constraints) {
-                  if (!blockMap.get(constraint).has(block)) {
+                  let found = false;
+                  // need to see if the other constraints are in any of the maps
+                  for (const innerMap of allMaps) {
+                    const innerBlockMap = innerMap.map;
+                    if (innerBlockMap.get(constraint).has(block)) {
+                      found = true;
+                    }
+                  }
+                  if (!found) {
                     show = false;
                     break;
                   }
@@ -96,14 +104,18 @@ document.addEventListener("DOMContentLoaded", () => {
               for (block of allBlocks) {
                 let show = true;
                 for (constraint of constraints) {
+                  let found = false;
+                  // need to see if the other constraints are in any of the maps
                   for (const innerMap of allMaps) {
                     const innerBlockMap = innerMap.map;
-                    if (!innerBlockMap.get(constraint).has(block)) {
-                      show = false;
-                      break;
+                    if (innerBlockMap.get(constraint).has(block)) {
+                      found = true;
                     }
                   }
-                  if (!show) break;
+                  if (!found) {
+                    show = false;
+                    break;
+                  }
                 }
                 if (show) {
                   block.style.display = "block";
