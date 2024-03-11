@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // check if we have a map entry for value
         if (!blockMap.has(value)) {
           // if not make one
-          blockMap.set(value, Set);
+          blockMap.set(value, new Set());
         }
         // add the child to the map
         blockMap.get(value).add(child);
