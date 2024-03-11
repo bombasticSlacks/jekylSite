@@ -47,6 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (blockMap.size === 0) {
         continue;
       }
+
+      
+      // Put all entries related to a map inside a div
+      const div = document.createElement("div");
+
       for (const key of blockMap) {
         // need a checkbox and label
         //const nameString = key[0] + " (" + key[1].size + ")";
@@ -123,12 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         storage.appendChild(checkBox);
         storage.appendChild(name);
-        filterNode.appendChild(storage);
+        div.appendChild(storage);
       }
-
-      // after each map if we did something append a spacer
-      const spacer = document.createElement("br");
-      filterNode.appendChild(spacer);
+      
+      filterNode.appendChild(div);
     }
 
     // after all if we have constraints update shown blocks
