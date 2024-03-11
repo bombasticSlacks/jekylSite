@@ -10,6 +10,8 @@ const allMaps = [
   { value: ".label-purple", map: pBlockMap },
   { value: ".label-red", map: rBlockMap },
 ];
+// all blocks unsorted
+const allBlocksMap = new Map();
 
 const constraints = new Set();
 const allBlocks = [];
@@ -36,9 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!blockMap.has(value)) {
             // if not make one
             blockMap.set(value, new Set());
+            allBlocksMap.set(value, new Set());
           }
           // add the child to the map
           blockMap.get(value).add(child);
+          allBlocksMap.get(value).add(child);
         }
       }
     }
@@ -82,15 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
               for (block of blockMap.get(key[0])) {
                 let show = true;
                 for (constraint of constraints) {
-                  let found = false;
-                  // need to see if the other constraints are in any of the maps
-                  for (const innerMap of allMaps) {
-                    const innerBlockMap = innerMap.map;
-                    if (innerBlockMap.get(constraint).has(block)) {
-                      found = true;
-                    }
-                  }
-                  if (!found) {
+                  if (!allBlocksMap.get(constraint).has(block)) {
                     show = false;
                     break;
                   }
@@ -104,15 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
               for (block of allBlocks) {
                 let show = true;
                 for (constraint of constraints) {
-                  let found = false;
-                  // need to see if the other constraints are in any of the maps
-                  for (const innerMap of allMaps) {
-                    const innerBlockMap = innerMap.map;
-                    if (innerBlockMap.get(constraint).has(block)) {
-                      found = true;
-                    }
-                  }
-                  if (!found) {
+                  if (!allBlocksMap.get(constraint).has(block)) {
                     show = false;
                     break;
                   }
