@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // go through all blocks and store them in sorting
       for (const map of allMaps) {
         const blockMap = map.map;
-        // get the corresponding labels
-        for (const label of child.querySelectorAll(map.value)) {
+        // get the corresponding labels but only first layer
+        for (const label of child.querySelectorAll("main > .block > " + map.value)) {
           const value = label.firstChild.textContent;
           // check if we have a map entry for value
           if (!blockMap.has(value)) {
