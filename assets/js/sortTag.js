@@ -28,7 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
       for (const map of allMaps) {
         const blockMap = map.map;
         // get the corresponding labels but only first layer
-        for (const label of child.querySelectorAll("main > .block > " + map.value)) {
+        for (const label of child.querySelectorAll(
+          "main > .block > " + map.value
+        )) {
           const value = label.firstChild.textContent;
           // check if we have a map entry for value
           if (!blockMap.has(value)) {
@@ -48,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
         continue;
       }
 
-      
       // Put all entries related to a map inside a div
       const div = document.createElement("div");
 
@@ -95,10 +96,14 @@ document.addEventListener("DOMContentLoaded", () => {
               for (block of allBlocks) {
                 let show = true;
                 for (constraint of constraints) {
-                  if (!blockMap.get(constraint).has(block)) {
-                    show = false;
-                    break;
+                  for (const innerMap of allMaps) {
+                    const innerBlockMap = innerMap.map;
+                    if (!innerBlockMap.get(constraint).has(block)) {
+                      show = false;
+                      break;
+                    }
                   }
+                  if (!show) break;
                 }
                 if (show) {
                   block.style.display = "block";
@@ -130,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         storage.appendChild(name);
         div.appendChild(storage);
       }
-      
+
       filterNode.appendChild(div);
     }
 
