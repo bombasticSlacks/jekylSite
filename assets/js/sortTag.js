@@ -62,8 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
         //const nameString = key[0] + " (" + key[1].size + ")";
         const nameString = key[0];
         const checkBox = document.createElement("input");
-        checkBox.type = "checkbox";
-        checkBox.name = nameString;
+        checkBox.type = "radio";
+        checkBox.name = map.value;
+        checkBox.value = nameString;
         checkBox.checked = searchParams.has(nameString);
         checkBox.onchange = (event) => {
           // if checked enable all the entries
