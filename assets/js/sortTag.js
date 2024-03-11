@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
               for (constraint of constraints) {
                 if (!blockMap.get(constraint).has(block)) {
                   show = false;
-                  return;
+                  break;
                 }
               }
               if (show) {
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
               for (constraint of constraints) {
                 if (!blockMap.get(constraint).has(block)) {
                   show = false;
-                  return;
+                  break;
                 }
               }
               if (show) {
