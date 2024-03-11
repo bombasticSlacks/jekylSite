@@ -84,8 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       const name = document.createElement("label");
       name.textContent = nameString;
-      filterNode.appendChild(checkBox);
-      filterNode.appendChild(name);
+
+      // div for them to sit in
+      const storage = document.createElement("div");
+
+      storage.className = "filterEntry"
+
+
+      storage.appendChild(checkBox);
+      storage.appendChild(name);
+      filterNode.appendChild(storage);
     }
   }
 });
