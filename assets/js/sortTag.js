@@ -3,6 +3,10 @@ const constraints = new Set();
 const allBlocks = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+  // process any parameters
+  const queryString = document.location.search;
+  const searchParams = new URLSearchParams(queryString);
+
   const filterNode = document.querySelector(".filter");
   if (filterNode !== null) {
     // on page load index each block with its traits and store them all
@@ -25,10 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const key of blockMap) {
       // need a checkbox and label
       //const nameString = key[0] + " (" + key[1].size + ")";
-      const nameString = key[0]
+      const nameString = key[0];
       const checkBox = document.createElement("input");
       checkBox.type = "checkbox";
       checkBox.name = nameString;
+      checkBox.checked = searchParams.has(nameString);
       checkBox.onchange = (event) => {
         // if checked enable all the entries
         if (event.currentTarget.checked) {
@@ -36,8 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           constraints.delete(key[0]);
         }
-
-        console.log(constraints)
 
         // if we have constraints update whats showing
         if (constraints.size !== 0) {
@@ -83,18 +86,44 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       };
+
+      // if already checked add constraint
+      if (searchParams.has(nameString)) {
+        constraints.add(key[0]);
+      }
+
       const name = document.createElement("label");
       name.textContent = nameString;
 
       // div for them to sit in
       const storage = document.createElement("div");
 
-      storage.className = "filterEntry"
-
+      storage.className = "filterEntry";
 
       storage.appendChild(checkBox);
       storage.appendChild(name);
       filterNode.appendChild(storage);
+    }
+
+    // after all if we have constraints update shown blocks
+    if (constraints.size !== 0) {
+      // Clear Entries Briefly
+      for (block of allBlocks) {
+        block.style.display = "none";
+      }
+
+      for (block of allBlocks) {
+        let show = true;
+        for (constraint of constraints) {
+          if (!blockMap.get(constraint).has(block)) {
+            show = false;
+            break;
+          }
+        }
+        if (show) {
+          block.style.display = "block";
+        }
+      }
     }
   }
 });
