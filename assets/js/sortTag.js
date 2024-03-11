@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
           constraints.delete(key[0]);
         }
 
+        console.log(constraints)
+
         // if we have constraints update whats showing
         if (constraints.size !== 0) {
           // Clear Entries Briefly
@@ -44,16 +46,33 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           // Only Enable Entries That Pass All Constraints
-          for (block of blockMap.get(key[0])) {
-            let show = true;
-            for (constraint of constraints) {
-              if (!blockMap.get(constraint).has(block)) {
-                show = false;
-                return;
+          if (event.currentTarget.checked) {
+            // if checked we can just iterate over the current list
+            for (block of blockMap.get(key[0])) {
+              let show = true;
+              for (constraint of constraints) {
+                if (!blockMap.get(constraint).has(block)) {
+                  show = false;
+                  return;
+                }
+              }
+              if (show) {
+                block.style.display = "block";
               }
             }
-            if (show) {
-              block.style.display = "block";
+          } else {
+            // otherwise we need to iterate over everything
+            for (block of allBlocks) {
+              let show = true;
+              for (constraint of constraints) {
+                if (!blockMap.get(constraint).has(block)) {
+                  show = false;
+                  return;
+                }
+              }
+              if (show) {
+                block.style.display = "block";
+              }
             }
           }
         } else {
