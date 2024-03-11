@@ -16,6 +16,19 @@ const allBlocksMap = new Map();
 const constraints = new Set();
 const allBlocks = [];
 
+const showLoop = (block) => {
+  let show = true;
+  for (constraint of constraints) {
+    if (!allBlocksMap.get(constraint).has(block)) {
+      show = false;
+      break;
+    }
+  }
+  if (show) {
+    block.style.display = "block";
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   // process any parameters
   const queryString = document.location.search;
@@ -84,30 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (event.currentTarget.checked) {
               // if checked we can just iterate over the current list
               for (block of blockMap.get(key[0])) {
-                let show = true;
-                for (constraint of constraints) {
-                  if (!allBlocksMap.get(constraint).has(block)) {
-                    show = false;
-                    break;
-                  }
-                }
-                if (show) {
-                  block.style.display = "block";
-                }
+                showLoop(block);
               }
             } else {
               // otherwise we need to iterate over everything
               for (block of allBlocks) {
-                let show = true;
-                for (constraint of constraints) {
-                  if (!allBlocksMap.get(constraint).has(block)) {
-                    show = false;
-                    break;
-                  }
-                }
-                if (show) {
-                  block.style.display = "block";
-                }
+                showLoop(block);
               }
             }
           } else {
@@ -147,16 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       for (block of allBlocks) {
-        let show = true;
-        for (constraint of constraints) {
-          if (!blockMap.get(constraint).has(block)) {
-            show = false;
-            break;
-          }
-        }
-        if (show) {
-          block.style.display = "block";
-        }
+        showLoop(block);
       }
     }
   }
