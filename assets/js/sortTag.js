@@ -1,4 +1,16 @@
-const blockMap = new Map();
+const yBlockMap = new Map();
+const gBlockMap = new Map();
+const bBlockMap = new Map();
+const pBlockMap = new Map();
+const rBlockMap = new Map();
+const allMaps = [
+  { value: ".label-yellow", map: yBlockMap },
+  { value: ".label-green", map: gBlockMap },
+  { value: ".label-blue", map: bBlockMap },
+  { value: ".label-purple", map: pBlockMap },
+  { value: ".label-red", map: rBlockMap },
+];
+
 const constraints = new Set();
 const allBlocks = [];
 
@@ -10,99 +22,113 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterNode = document.querySelector(".filter");
   if (filterNode !== null) {
     // on page load index each block with its traits and store them all
-    for (const child of document.querySelectorAll(".block")) {
+    for (const child of document.querySelectorAll("main > .block")) {
       allBlocks.push(child);
       // go through all blocks and store them in sorting
-      for (const label of child.querySelectorAll(".label")) {
-        const value = label.firstChild.textContent;
-        // check if we have a map entry for value
-        if (!blockMap.has(value)) {
-          // if not make one
-          blockMap.set(value, new Set());
+      for (const map of allMaps) {
+        const blockMap = map.map;
+        // get the corresponding labels
+        for (const label of child.querySelectorAll(map.value)) {
+          const value = label.firstChild.textContent;
+          // check if we have a map entry for value
+          if (!blockMap.has(value)) {
+            // if not make one
+            blockMap.set(value, new Set());
+          }
+          // add the child to the map
+          blockMap.get(value).add(child);
         }
-        // add the child to the map
-        blockMap.get(value).add(child);
       }
     }
 
     // need to replace sort placeholder with the available options
-    for (const key of blockMap) {
-      // need a checkbox and label
-      //const nameString = key[0] + " (" + key[1].size + ")";
-      const nameString = key[0];
-      const checkBox = document.createElement("input");
-      checkBox.type = "checkbox";
-      checkBox.name = nameString;
-      checkBox.checked = searchParams.has(nameString);
-      checkBox.onchange = (event) => {
-        // if checked enable all the entries
-        if (event.currentTarget.checked) {
-          constraints.add(key[0]);
-        } else {
-          constraints.delete(key[0]);
-        }
-
-        // if we have constraints update whats showing
-        if (constraints.size !== 0) {
-          // Clear Entries Briefly
-          for (block of allBlocks) {
-            block.style.display = "none";
+    for (const map of allMaps) {
+      const blockMap = map.map;
+      if (blockMap.size === 0) {
+        continue;
+      }
+      for (const key of blockMap) {
+        // need a checkbox and label
+        //const nameString = key[0] + " (" + key[1].size + ")";
+        const nameString = key[0];
+        const checkBox = document.createElement("input");
+        checkBox.type = "checkbox";
+        checkBox.name = nameString;
+        checkBox.checked = searchParams.has(nameString);
+        checkBox.onchange = (event) => {
+          // if checked enable all the entries
+          if (event.currentTarget.checked) {
+            constraints.add(key[0]);
+          } else {
+            constraints.delete(key[0]);
           }
 
-          // Only Enable Entries That Pass All Constraints
-          if (event.currentTarget.checked) {
-            // if checked we can just iterate over the current list
-            for (block of blockMap.get(key[0])) {
-              let show = true;
-              for (constraint of constraints) {
-                if (!blockMap.get(constraint).has(block)) {
-                  show = false;
-                  break;
+          // if we have constraints update whats showing
+          if (constraints.size !== 0) {
+            // Clear Entries Briefly
+            for (block of allBlocks) {
+              block.style.display = "none";
+            }
+
+            // Only Enable Entries That Pass All Constraints
+            if (event.currentTarget.checked) {
+              // if checked we can just iterate over the current list
+              for (block of blockMap.get(key[0])) {
+                let show = true;
+                for (constraint of constraints) {
+                  if (!blockMap.get(constraint).has(block)) {
+                    show = false;
+                    break;
+                  }
+                }
+                if (show) {
+                  block.style.display = "block";
                 }
               }
-              if (show) {
-                block.style.display = "block";
+            } else {
+              // otherwise we need to iterate over everything
+              for (block of allBlocks) {
+                let show = true;
+                for (constraint of constraints) {
+                  if (!blockMap.get(constraint).has(block)) {
+                    show = false;
+                    break;
+                  }
+                }
+                if (show) {
+                  block.style.display = "block";
+                }
               }
             }
           } else {
-            // otherwise we need to iterate over everything
+            // if we don't have constraints, show everything
             for (block of allBlocks) {
-              let show = true;
-              for (constraint of constraints) {
-                if (!blockMap.get(constraint).has(block)) {
-                  show = false;
-                  break;
-                }
-              }
-              if (show) {
-                block.style.display = "block";
-              }
+              block.style.display = "block";
             }
           }
-        } else {
-          // if we don't have constraints, show everything
-          for (block of allBlocks) {
-            block.style.display = "block";
-          }
-        }
-      };
+        };
 
-      // if already checked add constraint
-      if (searchParams.has(nameString)) {
-        constraints.add(key[0]);
+        // if already checked add constraint
+        if (searchParams.has(nameString)) {
+          constraints.add(key[0]);
+        }
+
+        const name = document.createElement("label");
+        name.textContent = nameString;
+
+        // div for them to sit in
+        const storage = document.createElement("div");
+
+        storage.className = "filterEntry";
+
+        storage.appendChild(checkBox);
+        storage.appendChild(name);
+        filterNode.appendChild(storage);
       }
 
-      const name = document.createElement("label");
-      name.textContent = nameString;
-
-      // div for them to sit in
-      const storage = document.createElement("div");
-
-      storage.className = "filterEntry";
-
-      storage.appendChild(checkBox);
-      storage.appendChild(name);
-      filterNode.appendChild(storage);
+      // after each map if we did something append a spacer
+      const spacer = document.createElement("br");
+      filterNode.appendChild(spacer);
     }
 
     // after all if we have constraints update shown blocks
