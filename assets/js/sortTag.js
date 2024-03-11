@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const checkBox = document.createElement("input")
         checkBox.type = "checkbox"
         checkBox.name = nameString
-        checkBox.onchange((event) => {
+        checkBox.onchange = ((event) => {
             // if checked enable all the entries
             if(event.currentTarget.checked) {
                 for(block of blockMap.get(key[0])) {
