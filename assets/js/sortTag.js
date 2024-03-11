@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // need to replace sort placeholder with the available options
     for (const key of blockMap) {
       // need a checkbox and label
-      const nameString = key[0] + " (" + key[1].size + ")";
+      //const nameString = key[0] + " (" + key[1].size + ")";
+      const nameString = key[0]
       const checkBox = document.createElement("input");
       checkBox.type = "checkbox";
       checkBox.name = nameString;
