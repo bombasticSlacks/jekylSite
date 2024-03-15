@@ -127,7 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         storage.className = "filterEntry";
 
-        storage.onclick = () => {
+        // make the div clickable
+        storage.addEventListener("click", () => {
           var cb = storage.querySelector("input");
           cb.checked = !cb.checked;
           if(cb.checked) {
@@ -135,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             storage.style.background = "none";
           }
-        };
+        });
 
         storage.appendChild(checkBox);
         storage.appendChild(name);
