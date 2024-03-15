@@ -126,6 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         storage.className = "filterEntry";
 
+        storage.onclick(() => {
+          var cb = storage.querySelector("input")
+          cb.checked = !cb.checked
+        });
+
         storage.appendChild(checkBox);
         storage.appendChild(name);
         div.appendChild(storage);
