@@ -28,10 +28,10 @@ const allBlocks = [];
 const showLoop = (block) => {
   let show = true;
   // get each overall constraint category
-  for (constraintSet of constraints) {
+  for (const constraintSet of constraints) {
     // go through each constraint
     const found = false;
-    for (constraint of constraintSet) {
+    for (const constraint of constraintSet) {
       if (allBlocksMap.get(constraint).has(block)) {
         found = true;
       }
@@ -156,25 +156,25 @@ document.addEventListener("DOMContentLoaded", () => {
           // if we have constraints update whats showing
           if (!constraintsEmpty()) {
             // Clear Entries Briefly
-            for (block of allBlocks) {
+            for (const block of allBlocks) {
               block.style.display = "none";
             }
 
             // Only Enable Entries That Pass All Constraints
             if (checked) {
               // if checked we can just iterate over the current list
-              for (block of blockMap.get(key[0])) {
+              for (const block of blockMap.get(key[0])) {
                 showLoop(block);
               }
             } else {
               // otherwise we need to iterate over everything
-              for (block of allBlocks) {
+              for (const block of allBlocks) {
                 showLoop(block);
               }
             }
           } else {
             // if we don't have constraints, show everything
-            for (block of allBlocks) {
+            for (const block of allBlocks) {
               block.style.display = "block";
             }
           }
@@ -191,11 +191,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // after all if we have constraints update shown blocks
     if (!constraintsEmpty()) {
       // Clear Entries Briefly
-      for (block of allBlocks) {
+      for (const block of allBlocks) {
         block.style.display = "none";
       }
 
-      for (block of allBlocks) {
+      for (const block of allBlocks) {
         showLoop(block);
       }
     }
