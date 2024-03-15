@@ -59,7 +59,9 @@ const deleteConstraint = (label, constraint) => {
 };
 
 const constraintsEmpty = () => {
-  for (set of constraints.values()) {
+  console.log(constraints);
+  for (const set of constraints.values()) {
+    console.log(set)
     if (set.size > 0) return false;
   }
 
