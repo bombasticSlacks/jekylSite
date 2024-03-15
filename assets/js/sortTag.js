@@ -78,10 +78,38 @@ document.addEventListener("DOMContentLoaded", () => {
         checkBox.type = "checkbox";
         checkBox.name = nameString;
         checkBox.checked = searchParams.has(nameString);
-        checkBox.display = "none";
-        checkBox.onchange = (event) => {
+        checkBox.style.display = "none";
+
+        // if already checked add constraint
+        if (searchParams.has(nameString)) {
+          constraints.add(key[0]);
+        }
+
+        const name = document.createElement("label");
+        name.textContent = nameString;
+
+        // div for them to sit in
+        const storage = document.createElement("div");
+
+        storage.className = "filterEntry";
+
+        storage.onclick = () => {
+          var cb = storage.querySelector("input");
+
+          // flip the color
+          cb.checked = !cb.checked;
+
+          const checked = cb.checked;
+
+          // set the background
+          if (checked) {
+            storage.style.background = "#0060df";
+          } else {
+            storage.style.background = "none";
+          }
+
           // if checked enable all the entries
-          if (event.currentTarget.checked) {
+          if (checked) {
             constraints.add(key[0]);
           } else {
             constraints.delete(key[0]);
@@ -111,29 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
             for (block of allBlocks) {
               block.style.display = "block";
             }
-          }
-        };
-
-        // if already checked add constraint
-        if (searchParams.has(nameString)) {
-          constraints.add(key[0]);
-        }
-
-        const name = document.createElement("label");
-        name.textContent = nameString;
-
-        // div for them to sit in
-        const storage = document.createElement("div");
-
-        storage.className = "filterEntry";
-
-        storage.onclick = () => {
-          var cb = storage.querySelector("input");
-          cb.checked = !cb.checked;
-          if(cb.checked) {
-            storage.style.background = "#0060df";
-          } else {
-            storage.style.background = "none";
           }
         };
 
