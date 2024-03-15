@@ -30,7 +30,7 @@ const showLoop = (block) => {
   // get each overall constraint category
   for (const constraintSet of constraints) {
     // go through each constraint
-    const found = false;
+    let found = false;
     for (const constraint of constraintSet) {
       if (allBlocksMap.get(constraint).has(block)) {
         found = true;
