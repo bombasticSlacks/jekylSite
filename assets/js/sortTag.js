@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         checkBox.type = "checkbox";
         checkBox.name = nameString;
         checkBox.checked = searchParams.has(nameString);
+        checkBox.display = "none";
         checkBox.onchange = (event) => {
           // if checked enable all the entries
           if (event.currentTarget.checked) {
@@ -126,10 +127,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         storage.className = "filterEntry";
 
-        storage.onclick(() => {
-          var cb = storage.querySelector("input")
-          cb.checked = !cb.checked
-        });
+        storage.onclick = () => {
+          var cb = storage.querySelector("input");
+          cb.checked = !cb.checked;
+          if(cb.checked) {
+            storage.style.background = "#0060df";
+          } else {
+            storage.style.background = "none";
+          }
+        };
 
         storage.appendChild(checkBox);
         storage.appendChild(name);
