@@ -13,20 +13,53 @@ const allMaps = [
 // all blocks unsorted
 const allBlocksMap = new Map();
 
-const constraints = new Set();
+const blue = "#0060df";
+
+// create storage for constraints by type
+const constraints = new Map();
+constraints.set(".label-yellow", new Set());
+constraints.set(".label-green", new Set());
+constraints.set(".label-blue", new Set());
+constraints.set(".label-purple", new Set());
+constraints.set(".label-red", new Set());
+
 const allBlocks = [];
 
 const showLoop = (block) => {
   let show = true;
-  for (constraint of constraints) {
-    if (!allBlocksMap.get(constraint).has(block)) {
-      show = false;
+  // get each overall constraint category
+  for (constraintSet of constraints) {
+    // go through each constraint
+    const found = false;
+    for (constraint of constraintSet) {
+      if (allBlocksMap.get(constraint).has(block)) {
+        found = true;
+      }
+    }
+    if(!found) {
+      show = false
       break;
     }
   }
   if (show) {
     block.style.display = "block";
   }
+};
+
+const addConstraint = (label, constraint) => {
+  constraints.get(label).add(constraint);
+};
+
+const deleteConstraint = (label, constraint) => {
+  constraints.get(label).delete(constraint);
+};
+
+const constraintsEmpty = () => {
+  for (set of constraints) {
+    if (set.size > 0) return false;
+  }
+
+  return true;
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -82,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // if already checked add constraint
         if (searchParams.has(nameString)) {
-          constraints.add(key[0]);
+          addConstraint(map.value, key[0]);
         }
 
         const name = document.createElement("label");
@@ -92,6 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const storage = document.createElement("div");
 
         storage.className = "filterEntry";
+        if (searchParams.has(nameString)) {
+          storage.style.background = blue;
+        } else {
+          storage.style.background = "none";
+        }
 
         storage.onclick = () => {
           var cb = storage.querySelector("input");
@@ -103,27 +141,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // set the background
           if (checked) {
-            storage.style.background = "#0060df";
+            storage.style.background = blue;
           } else {
             storage.style.background = "none";
           }
 
           // if checked enable all the entries
           if (checked) {
-            constraints.add(key[0]);
+            addConstraint(map.value, key[0]);
           } else {
-            constraints.delete(key[0]);
+            deleteConstraint(map.value, key[0]);
           }
 
           // if we have constraints update whats showing
-          if (constraints.size !== 0) {
+          if (!constraintsEmpty()) {
             // Clear Entries Briefly
             for (block of allBlocks) {
               block.style.display = "none";
             }
 
             // Only Enable Entries That Pass All Constraints
-            if (event.currentTarget.checked) {
+            if (checked) {
               // if checked we can just iterate over the current list
               for (block of blockMap.get(key[0])) {
                 showLoop(block);
@@ -151,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // after all if we have constraints update shown blocks
-    if (constraints.size !== 0) {
+    if (!constraintsEmpty()) {
       // Clear Entries Briefly
       for (block of allBlocks) {
         block.style.display = "none";
