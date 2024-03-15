@@ -59,9 +59,7 @@ const deleteConstraint = (label, constraint) => {
 };
 
 const constraintsEmpty = () => {
-  console.log(constraints);
   for (const set of constraints.values()) {
-    console.log(set)
     if (set.size > 0) return false;
   }
 
@@ -166,18 +164,11 @@ document.addEventListener("DOMContentLoaded", () => {
               block.style.display = "none";
             }
 
-            // Only Enable Entries That Pass All Constraints
-            if (checked) {
-              // if checked we can just iterate over the current list
-              for (const block of blockMap.get(key[0])) {
-                showLoop(block);
-              }
-            } else {
-              // otherwise we need to iterate over everything
-              for (const block of allBlocks) {
-                showLoop(block);
-              }
+            // need to iterate over everything
+            for (const block of allBlocks) {
+              showLoop(block);
             }
+
           } else {
             // if we don't have constraints, show everything
             for (const block of allBlocks) {
