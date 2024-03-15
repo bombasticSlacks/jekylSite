@@ -28,8 +28,12 @@ const allBlocks = [];
 const showLoop = (block) => {
   let show = true;
   // get each overall constraint category
-  for (const constraintSet of constraints) {
+  for (const constraintSet of constraints.values()) {
     // go through each constraint
+    if(constraintSet.size === 0) {
+      // ignore empty constraints
+      continue;
+    }
     let found = false;
     for (const constraint of constraintSet) {
       if (allBlocksMap.get(constraint).has(block)) {
@@ -55,7 +59,7 @@ const deleteConstraint = (label, constraint) => {
 };
 
 const constraintsEmpty = () => {
-  for (set of constraints) {
+  for (set of constraints.values()) {
     if (set.size > 0) return false;
   }
 
