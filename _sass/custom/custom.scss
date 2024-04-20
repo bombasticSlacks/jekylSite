@@ -1,59 +1,68 @@
 .label {
-	margin-bottom: 0px;
-	margin-left: 0px;
-	margin-right: .2em;
-	margin-top: 0px;
-	float: right;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0.2em;
+  margin-top: 0px;
+  float: right;
 }
 
 .label a {
-	color: $white;
-	text-decoration: none;
+  color: $white;
+  text-decoration: none;
 }
 
 .label.label-yellow a {
-	color: $grey-dk-200;
-	text-decoration: none;
+  color: $grey-dk-200;
+  text-decoration: none;
 }
 
 .block {
-	padding: 1em;
-  	border: 1px solid gray;
-	margin-bottom: .5em;
-	border-radius: .5em;
+  padding: 1em;
+  border: 1px solid gray;
+  margin-bottom: 0.5em;
+  border-radius: 0.5em;
 }
 
-h4, h5 {
-	font-weight: 700;
+h4,
+h5 {
+  font-weight: 700;
 }
 
 th {
-	min-width: 0px;
+  min-width: 0px;
 }
 
 td {
-	min-width: 0px;
+  min-width: 0px;
 }
 
 .filter {
-	border-radius: .5em;
-	padding: 1em;
-	border: 1px solid gray;
-	margin-right: 0px;
-	margin-left: 0px;
-	margin-bottom: .5em;
-	display: grid;
+  border-radius: 0.5em;
+  padding: 1em;
+  border: 1px solid gray;
+  margin-right: 0px;
+  margin-left: 0px;
+  margin-bottom: 0.5em;
+  display: grid;
 }
 
 .filterEntry {
-	float: left;
-	border: 1px solid gray;
-	border-radius: .5em;
-	padding: .4em;
-	margin-right: .5em;
-	margin-bottom: .5em;
+  float: left;
+  border: 1px solid gray;
+  border-radius: 0.5em;
+  padding: 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 input[type="checkbox"] {
-	margin-right: .5em;
+  margin-right: 0.5em;
+}
+
+.imgstack {
+  position: absolute;
+}
+
+.sprite {
+  float: left;
 }
