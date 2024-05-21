@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const blockMap = map.map;
         // get the corresponding labels but only first layer
         for (const label of child.querySelectorAll(
-          "main > .block > " + map.value
+          "main > .block > .blockdetails > " + map.value
         )) {
           const value = label.firstChild.textContent;
           // check if we have a map entry for value
