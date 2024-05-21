@@ -46,7 +46,7 @@ const showLoop = (block) => {
     }
   }
   if (show) {
-    block.style.display = "block";
+    block.style.display = "flex";
   }
 };
 
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             // if we don't have constraints, show everything
             for (const block of allBlocks) {
-              block.style.display = "block";
+              block.style.display = "flex";
             }
           }
         };
